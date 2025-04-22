@@ -8,6 +8,6 @@ import (
 
 func MainContainer() *fyne.Container {
 	return container.NewVBox(
-		widget.NewLabel("Prestamos"),
+		widget.NewLabel("prestamos"),
 	)
 }

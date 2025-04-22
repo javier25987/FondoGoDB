@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
@@ -9,8 +11,12 @@ import (
 // "fyne.io/fyne/v2/layout"
 
 var Admin bool = false // Variable para determinar si es administrador o no
+var Index int = 0      // determina el actual del fondo
 
 func main() {
+
+	log.Println("Iniciando el programa...")
+
 	myApp := app.New()
 	myWindow := myApp.NewWindow("Sidebar Demo")
 
