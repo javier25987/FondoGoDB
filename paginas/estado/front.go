@@ -1,4 +1,4 @@
-package transferencias
+package estado
 
 import (
 	"fyne.io/fyne/v2"
@@ -8,6 +8,6 @@ import (
 
 func MainContainer() *fyne.Container {
 	return container.NewVBox(
-		widget.NewLabel("tranferencias"),
+		widget.NewLabel("estado"),
 	)
 }
