@@ -24,13 +24,13 @@ func main() {
 	myContainer := container.NewPadded()
 
 	// Sidebar
-	sidebar := make_slide_bar(myContainer)
+	sidebar := make_slide_bar(myContainer, myWindow)
 
 	// Contenedor general: Sidebar + Contenido principal
 	mainContainer := container.NewHSplit(sidebar, myContainer)
 	mainContainer.SetOffset(0.1) // Tamaño relativo de la barra lateral
 
 	myWindow.SetContent(mainContainer)
-	myWindow.Resize(fyne.NewSize(600, 400))
+	myWindow.Resize(fyne.NewSize(1000, 700))
 	myWindow.ShowAndRun()
 }

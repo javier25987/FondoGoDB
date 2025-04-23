@@ -1,11 +1,17 @@
 package main
 
 import (
+	// importaciones de la biblioteca standart
+	"log"
+
+	// importaciones de fyne
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 
+	// importaciones de mis paquetes
 	"fondo/paginas/ajustes"
 	"fondo/paginas/anotaciones"
 	"fondo/paginas/cuotas"
@@ -18,7 +24,7 @@ import (
 	"fondo/paginas/ver_usuarios"
 )
 
-func make_slide_bar(cont *fyne.Container) *fyne.Container {
+func make_slide_bar(cont *fyne.Container, win fyne.Window) *fyne.Container {
 	// Paginas generales
 	btnMenu := widget.NewButtonWithIcon(
 		"menu",
@@ -127,22 +133,41 @@ func make_slide_bar(cont *fyne.Container) *fyne.Container {
 		"ingresar",
 		theme.LoginIcon(),
 		func() {
-			adminContainer.Objects = []fyne.CanvasObject{
-				btnModificarSocios,
-				btnAjustes,
-				widget.NewButtonWithIcon(
-					"salir",
-					theme.LogoutIcon(),
-					func() {
-						adminContainer.Objects = []fyne.CanvasObject{}
-						adminContainer.Add(btnIngresar)
-						adminContainer.Refresh()
-						Admin = false
-					},
-				),
+			password := widget.NewPasswordEntry()
+			items := []*widget.FormItem{
+				widget.NewFormItem("Password", password),
 			}
-			adminContainer.Refresh()
-			Admin = true
+
+			dialog.ShowForm(
+				"Acceder como admimistrador",
+				"Acceder",
+				"Cancelar",
+				items,
+				func(b bool) {
+
+					if password.Text == "1234" {
+						adminContainer.Objects = []fyne.CanvasObject{
+							btnModificarSocios,
+							btnAjustes,
+							widget.NewButtonWithIcon(
+								"salir",
+								theme.LogoutIcon(),
+								func() {
+									adminContainer.Objects = []fyne.CanvasObject{}
+									adminContainer.Add(btnIngresar)
+									adminContainer.Refresh()
+									Admin = false
+									log.Println("Modo administrador desactivado")
+								},
+							),
+						}
+						adminContainer.Refresh()
+						Admin = true
+						log.Println("Modo administrador activado")
+					}
+				},
+				win,
+			)
 		},
 	)
 
