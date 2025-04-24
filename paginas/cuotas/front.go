@@ -4,7 +4,6 @@ import (
 	myfn "fondo/misFunciones"
 
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
 )
 
 func MainContainer(index int) *container.Split {
@@ -12,12 +11,12 @@ func MainContainer(index int) *container.Split {
 
 	table := myfn.MakeTableCuotas(data)
 
+	nombre := createName(index)
+
 	allContainer := container.NewHSplit(
 		container.NewHScroll(table),
 		container.NewVBox(
-			widget.NewLabel("Contenido adicional"),
-			widget.NewLabel("Más información"),
-			widget.NewLabel("Detalles"),
+			nombre,
 		),
 	)
 	allContainer.SetOffset(0.35)

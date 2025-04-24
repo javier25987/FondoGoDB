@@ -2,10 +2,17 @@ package cuotas
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
 
+	myfn "fondo/misFunciones"
+	mySQL "fondo/sql"
+
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -86,4 +93,18 @@ func getUserTable(index int) [51][4]string {
 	}
 
 	return myArray
+}
+
+func createName(index int) *fyne.Container {
+
+	nombre := mySQL.GetValueStr("informacion_general", "nombre", index)
+	nombre = myfn.Title(nombre)
+
+	puestos := mySQL.GetValueInt("informacion_general", "puestos", index)
+
+	mensaje := fmt.Sprintf("# № %d - %s : %d puesto(s)", index, nombre, puestos)
+
+	return container.NewVBox(
+		widget.NewRichTextFromMarkdown(mensaje),
+	)
 }
