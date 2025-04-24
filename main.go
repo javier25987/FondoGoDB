@@ -12,6 +12,7 @@ import (
 
 var Admin bool = false // Variable para determinar si es administrador o no
 var Index int = 0      // determina el actual del fondo
+var PaginaActual string = ""
 
 func main() {
 
@@ -31,6 +32,6 @@ func main() {
 	mainContainer.SetOffset(0.1) // Tamaño relativo de la barra lateral
 
 	myWindow.SetContent(mainContainer)
-	myWindow.Resize(fyne.NewSize(1000, 700))
+	myWindow.Resize(fyne.NewSize(800, 600))
 	myWindow.ShowAndRun()
 }

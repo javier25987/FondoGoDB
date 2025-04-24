@@ -2,7 +2,10 @@ package main
 
 import (
 	// importaciones de la biblioteca standart
+	"errors"
+	"fmt"
 	"log"
+	"strconv"
 
 	// importaciones de fyne
 	"fyne.io/fyne/v2"
@@ -25,105 +28,129 @@ import (
 )
 
 func make_slide_bar(cont *fyne.Container, win fyne.Window) *fyne.Container {
+
+	// funciones de paginas
+	funMenu := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(widget.NewLabel("Menu"))
+		cont.Refresh()
+		PaginaActual = "menu"
+	}
+	funCuotas := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(cuotas.MainContainer(Index))
+		cont.Refresh()
+		PaginaActual = "cuotas"
+	}
+	funPrestamos := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(prestamos.MainContainer())
+		cont.Refresh()
+		PaginaActual = "prestamos"
+	}
+	funEstado := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(estado.MainContainer())
+		cont.Refresh()
+		PaginaActual = "estado"
+	}
+	funTransferencias := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(transferencias.MainContainer())
+		cont.Refresh()
+		PaginaActual = "transferencias"
+	}
+	funRifas := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(rifas.MainContainer())
+		cont.Refresh()
+		PaginaActual = "rifas"
+	}
+	funAnotaciones := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(anotaciones.MainContainer())
+		cont.Refresh()
+		PaginaActual = "anotaciones"
+	}
+	funVerUsuarios := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(ver_usuarios.MainContainer())
+		cont.Refresh()
+		PaginaActual = "ver_usuarios"
+	}
+	funRegistros := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(registros.MainContainer())
+		cont.Refresh()
+		PaginaActual = "registros"
+	}
+	funModificarUsuarios := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(modificar_usuarios.MainContainer())
+		cont.Refresh()
+		PaginaActual = "modificar_usuarios"
+	}
+	funAjustes := func() {
+		cont.Objects = []fyne.CanvasObject{}
+		cont.Add(ajustes.MainContainer())
+		cont.Refresh()
+		PaginaActual = "ajustes"
+	}
+
 	// Paginas generales
 	btnMenu := widget.NewButtonWithIcon(
 		"menu",
 		theme.HomeIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(cuotas.MainContainer())
-			cont.Refresh()
-		},
+		funMenu,
 	)
 	btnCuotas := widget.NewButtonWithIcon(
 		"cuotas",
 		theme.CalendarIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(cuotas.MainContainer())
-			cont.Refresh()
-		},
+		funCuotas,
 	)
 	btnPrestamos := widget.NewButtonWithIcon(
 		"prestamos",
 		theme.CalendarIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(prestamos.MainContainer())
-			cont.Refresh()
-		},
+		funPrestamos,
 	)
 	btnEstado := widget.NewButtonWithIcon(
 		"estado",
 		theme.AccountIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(estado.MainContainer())
-			cont.Refresh()
-		},
-	)
+		funEstado)
 	btnTransferencias := widget.NewButtonWithIcon(
 		"transferencias",
 		theme.ListIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(transferencias.MainContainer())
-			cont.Refresh()
-		},
+		funTransferencias,
 	)
 	btnRifas := widget.NewButtonWithIcon(
 		"rifas",
 		theme.CalendarIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(rifas.MainContainer())
-			cont.Refresh()
-		},
+		funRifas,
 	)
 	btnAnotaciones := widget.NewButtonWithIcon(
 		"anotaciones",
 		theme.DocumentCreateIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(anotaciones.MainContainer())
-			cont.Refresh()
-		},
+		funAnotaciones,
 	)
 	btnVerSocios := widget.NewButtonWithIcon(
 		"ver socios",
 		theme.SearchIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(ver_usuarios.MainContainer())
-			cont.Refresh()
-		},
+		funVerUsuarios,
 	)
 	btnRegistros := widget.NewButtonWithIcon(
 		"registros",
 		theme.StorageIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(registros.MainContainer())
-			cont.Refresh()
-		},
+		funRegistros,
 	)
 	btnModificarSocios := widget.NewButtonWithIcon(
 		"modificar socios",
 		theme.WarningIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(modificar_usuarios.MainContainer())
-			cont.Refresh()
-		},
+		funModificarUsuarios,
 	)
 	btnAjustes := widget.NewButtonWithIcon(
 		"ajustes",
 		theme.SettingsIcon(),
-		func() {
-			cont.Objects = []fyne.CanvasObject{}
-			cont.Add(ajustes.MainContainer())
-			cont.Refresh()
-		},
+		funAjustes,
 	)
 
 	var adminContainer *fyne.Container
@@ -175,6 +202,54 @@ func make_slide_bar(cont *fyne.Container, win fyne.Window) *fyne.Container {
 		btnIngresar,
 	)
 
+	entradaUser := widget.NewEntry()
+
+	botonBuscar := widget.NewButton("Buscar", func() {
+		numeroUser, err := strconv.Atoi(entradaUser.Text)
+
+		if err != nil {
+			mensaje := fmt.Sprintf(
+				"[%s] No es un valor válido",
+				entradaUser.Text,
+			)
+			dialog.ShowError(errors.New(mensaje), win)
+		}
+
+		Index = numeroUser
+
+		switch PaginaActual {
+
+		case "cuotas":
+			funCuotas()
+		case "prestamos":
+			funPrestamos()
+		case "estado":
+			funEstado()
+		case "transferencias":
+			funTransferencias()
+		case "rifas":
+			funRifas()
+		case "anotaciones":
+			funAnotaciones()
+		case "ver_usuarios":
+			funVerUsuarios()
+		case "registros":
+			funRegistros()
+		case "modificar_usuarios":
+			funModificarUsuarios()
+		case "ajustes":
+			funAjustes()
+
+		default:
+			funMenu()
+		}
+	})
+
+	setUser := container.NewVBox(
+		entradaUser,
+		botonBuscar,
+	)
+
 	return container.NewVBox(
 		widget.NewLabelWithStyle(
 			"Paginas Generales",
@@ -190,11 +265,19 @@ func make_slide_bar(cont *fyne.Container, win fyne.Window) *fyne.Container {
 		btnAnotaciones,
 		btnVerSocios,
 		btnRegistros,
+
 		widget.NewLabelWithStyle(
 			"Paginas Administrativas",
 			fyne.TextAlignCenter,
 			fyne.TextStyle{Bold: true},
 		),
 		adminContainer,
+
+		widget.NewLabelWithStyle(
+			"Buscar Usuarios",
+			fyne.TextAlignCenter,
+			fyne.TextStyle{Bold: true},
+		),
+		setUser,
 	)
 }

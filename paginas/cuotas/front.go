@@ -7,47 +7,10 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func MainContainer() *container.Split {
-	data := [][]string{
-		{"Nombre", "Edad", "Ciudad"},
-		{"Ana", "25", "Bogotá"},
-		{"Luis", "30", "Medellín"},
-		{"Carlos", "28", "Cali"},
-		{"Nombre", "Edad", "Ciudad"},
-		{"Ana", "25", "Bogotá"},
-		{"Luis", "30", "Medellín"},
-		{"Carlos", "28", "Cali"},
-		{"Nombre", "Edad", "Ciudad"},
-		{"Ana", "25", "Bogotá"},
-		{"Luis", "30", "Medellín"},
-		{"Carlos", "28", "Cali"},
-		{"Nombre", "Edad", "Ciudad"},
-		{"Ana", "25", "Bogotá"},
-		{"Luis", "30", "Medellín"},
-		{"Carlos", "28", "Cali"},
-		{"Nombre", "Edad", "Ciudad"},
-		{"Ana", "25", "Bogotá"},
-		{"Luis", "30", "Medellín"},
-		{"Carlos", "28", "Cali"},
-		{"Nombre", "Edad", "Ciudad"},
-		{"Ana", "25", "Bogotá"},
-		{"Luis", "30", "Medellín"},
-		{"Carlos", "28", "Cali"},
-		{"Nombre", "Edad", "Ciudad"},
-		{"Ana", "25", "Bogotá"},
-		{"Luis", "30", "Medellín"},
-		{"Carlos", "28", "Cali"},
-		{"Nombre", "Edad", "Ciudad"},
-		{"Ana", "25", "Bogotá"},
-		{"Luis", "30", "Medellín"},
-		{"Carlos", "28", "Cali"},
-		{"Nombre", "Edad", "Ciudad"},
-		{"Ana", "25", "Bogotá"},
-		{"Luis", "30", "Medellín"},
-		{"Carlos", "28", "Cali"},
-	}
+func MainContainer(index int) *container.Split {
+	data := getUserTable(index)
 
-	table := myfn.MakeTable(data)
+	table := myfn.MakeTableCuotas(data)
 
 	allContainer := container.NewHSplit(
 		container.NewHScroll(table),
@@ -57,6 +20,7 @@ func MainContainer() *container.Split {
 			widget.NewLabel("Detalles"),
 		),
 	)
+	allContainer.SetOffset(0.35)
 
 	return allContainer
 }
