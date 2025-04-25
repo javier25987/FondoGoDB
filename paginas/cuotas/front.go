@@ -11,15 +11,18 @@ func MainContainer(index int) *container.Split {
 
 	table := myfn.MakeTableCuotas(data)
 
-	nombre := createName(index)
+	// todos estos son los elementos habituales pero los planeo manejar por tarjetas
+	nombre := makeName(index)
+	formulario := makeFormPay(index)
 
 	allContainer := container.NewHSplit(
 		container.NewHScroll(table),
 		container.NewVBox(
 			nombre,
+			formulario,
 		),
 	)
-	allContainer.SetOffset(0.35)
+	allContainer.SetOffset(0.4)
 
 	return allContainer
 }

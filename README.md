@@ -4,6 +4,8 @@
 
 ## Anotaciones
 
+> Para cambiar la escala de la ventana lo recomendable cambiar la escala de al pantalla `$env:FYNE_SCALE = "1.2"`
+
 > En el fondo hay una gerarquia de simbolos para separar los elementos de un string la gerarquia es la siguiente `_ >> # >> ?`
 
 > El simbolo `/` se reserva unicamente para las fechas y para nada mas
@@ -33,7 +35,17 @@ Estoy reaciendo el programa en go esta seccion esta vacia por el momento
 
 ## Codigo que elimine y podria servir en un futuro
 
-vacio
+```go
+disabled := widget.NewRadioGroup([]string{"Option 1", "Option 2"}, func(string) {})
+disabled.Horizontal = true
+disabled.Disable()
+largeText := widget.NewMultiLineEntry()
+password := widget.NewPasswordEntry()
+password.SetPlaceHolder("Password")
+```
+
+
+para incluir datos en un formato (como el de pago en cuotas) se usa `form.Append("<Text>", <Widget>)`
 
 ## Datos a tener en cuenta para mostara en la tabla
 

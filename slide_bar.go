@@ -98,50 +98,16 @@ func make_slide_bar(cont *fyne.Container, win fyne.Window) *fyne.Container {
 	}
 
 	// Paginas generales
-	btnMenu := widget.NewButtonWithIcon(
-		"menu",
-		theme.HomeIcon(),
-		funMenu,
-	)
-	btnCuotas := widget.NewButtonWithIcon(
-		"cuotas",
-		theme.CalendarIcon(),
-		funCuotas,
-	)
-	btnPrestamos := widget.NewButtonWithIcon(
-		"prestamos",
-		theme.CalendarIcon(),
-		funPrestamos,
-	)
-	btnEstado := widget.NewButtonWithIcon(
-		"estado",
-		theme.AccountIcon(),
-		funEstado)
-	btnTransferencias := widget.NewButtonWithIcon(
-		"transferencias",
-		theme.ListIcon(),
-		funTransferencias,
-	)
-	btnRifas := widget.NewButtonWithIcon(
-		"rifas",
-		theme.CalendarIcon(),
-		funRifas,
-	)
-	btnAnotaciones := widget.NewButtonWithIcon(
-		"anotaciones",
-		theme.DocumentCreateIcon(),
-		funAnotaciones,
-	)
-	btnVerSocios := widget.NewButtonWithIcon(
-		"ver socios",
-		theme.SearchIcon(),
-		funVerUsuarios,
-	)
-	btnRegistros := widget.NewButtonWithIcon(
-		"registros",
-		theme.StorageIcon(),
-		funRegistros,
-	)
+	btnMenu := widget.NewButton("📘 menu", funMenu)
+	btnCuotas := widget.NewButton("📆 cuotas", funCuotas)
+	btnPrestamos := widget.NewButton("💵 prestamos", funPrestamos)
+	btnEstado := widget.NewButton("📈 estado", funEstado)
+	btnTransferencias := widget.NewButton("🏛 transferencias", funTransferencias)
+	btnRifas := widget.NewButton("💰 rifas", funRifas)
+	btnAnotaciones := widget.NewButton("📝 anotaciones", funAnotaciones)
+	btnVerSocios := widget.NewButton("🔍 ver socios", funVerUsuarios)
+	btnRegistros := widget.NewButton("📚 registros", funRegistros)
+
 	btnModificarSocios := widget.NewButtonWithIcon(
 		"modificar socios",
 		theme.WarningIcon(),
@@ -204,7 +170,7 @@ func make_slide_bar(cont *fyne.Container, win fyne.Window) *fyne.Container {
 
 	entradaUser := widget.NewEntry()
 
-	botonBuscar := widget.NewButton("Buscar", func() {
+	botonBuscar := widget.NewButton("🔎 Buscar", func() {
 		numeroUser, err := strconv.Atoi(entradaUser.Text)
 
 		if err != nil {

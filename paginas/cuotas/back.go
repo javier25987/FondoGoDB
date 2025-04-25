@@ -54,14 +54,32 @@ func getUserTable(index int) [51][4]string {
 	semanas_array := [50]string{}
 	pagas_array := [50]string{}
 
+	bloqueos := "9_7_2_19"
+
+	if bloqueos != "n" {
+		bloqueosArray := strings.Split(bloqueos, "_")
+
+		var b_ind int
+
+		for _, b := range bloqueosArray {
+			b_ind, _ = strconv.Atoi(b) // descartar el error es una mala practica pero no me importa
+			pagas_array[b_ind-1] = "b"
+		}
+	}
+
 	for i := 0; i < 50; i++ {
 		semanas_array[i] = strconv.Itoa(i + 1)
+
+		if pagas_array[i] == "b" {
+			pagas_array[i] = "🔒"
+			continue
+		}
 
 		if pagas > 0 {
 			pagas_array[i] = "✅"
 			pagas--
 		} else if adeudas > 0 {
-			pagas_array[i] = "🚨"
+			pagas_array[i] = "❌"
 			adeudas--
 		} else {
 			pagas_array[i] = ""
@@ -84,10 +102,19 @@ func getUserTable(index int) [51][4]string {
 		}
 	}
 
+	// creamos el calendario de pagos
+
+	calendario := mySQL.GetAjusteStr("calendario")
+	calendarioArray := strings.Split(calendario, "_")
+
+	for i, f := range calendarioArray {
+		calendarioArray[i] = f[:len(f)-3]
+	}
+
 	// llenamos el array con los datos
 	for i := 0; i < 50; i++ {
 		myArray[i+1][0] = semanas_array[i]
-		myArray[i+1][1] = "21/05/2004" // fecha de ejemplo
+		myArray[i+1][1] = calendarioArray[i]
 		myArray[i+1][2] = pagas_array[i]
 		myArray[i+1][3] = multas_array[i]
 	}
@@ -95,7 +122,7 @@ func getUserTable(index int) [51][4]string {
 	return myArray
 }
 
-func createName(index int) *fyne.Container {
+func makeName(index int) *fyne.Container {
 
 	nombre := mySQL.GetValueStr("informacion_general", "nombre", index)
 	nombre = myfn.Title(nombre)
@@ -104,7 +131,44 @@ func createName(index int) *fyne.Container {
 
 	mensaje := fmt.Sprintf("# № %d - %s : %d puesto(s)", index, nombre, puestos)
 
+	// return container.NewVBox(
+	//     widget.NewRichTextFromMarkdown(mensaje),
+	// )
+
 	return container.NewVBox(
-		widget.NewRichTextFromMarkdown(mensaje),
+		widget.NewCard(mensaje, "", nil),
+		// widget.NewRadioGroup([]string{"6:30pm", "7:00pm", "7:45pm"}, func(string) {}),
 	)
+}
+
+func makeFormPay(index int) fyne.CanvasObject {
+
+	cuotasPagar := widget.NewSelect(
+		[]string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
+		func(s string) {},
+	)
+	cuotasPagar.PlaceHolder = "0"
+
+	multasPagar := widget.NewSelect(
+		[]string{"0", "1", "2"},
+		func(s string) {},
+	)
+	multasPagar.PlaceHolder = "0"
+
+	metodoPago := widget.NewRadioGroup(
+		[]string{"Efectivo", "Transferencia"},
+		func(s string) {},
+	)
+
+	form := &widget.Form{
+		Items: []*widget.FormItem{
+			{Text: "Cuotas a pagar:", Widget: cuotasPagar}, // HintText: "Your full name"},
+			{Text: "Multas a pagar:", Widget: multasPagar},
+			{Text: "Metodo de pago:", Widget: metodoPago},
+		},
+		SubmitText: "Pagar",
+		OnSubmit:   func() {},
+	}
+
+	return widget.NewCard("Formulario de pago:", "", form)
 }
