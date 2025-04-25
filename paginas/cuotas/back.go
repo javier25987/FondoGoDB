@@ -172,3 +172,23 @@ func makeFormPay(index int) fyne.CanvasObject {
 
 	return widget.NewCard("Formulario de pago:", "", form)
 }
+
+func makeFormBlock(index int) fyne.CanvasObject {
+
+	semanasBlock := widget.NewEntry()
+	semanasBlock.PlaceHolder = "1 - 50"
+
+	form := &widget.Form{
+		Items: []*widget.FormItem{
+			{
+				Text:     "Semana a (des)bloquear:",
+				Widget:   semanasBlock,
+				HintText: "Escriba un numero entre 1 y 50",
+			},
+		},
+		SubmitText: "(Des)Bloquear",
+		OnSubmit:   func() {},
+	}
+
+	return widget.NewCard("(Des)Bloquear semanas:", "", form)
+}
