@@ -38,7 +38,7 @@ func make_slide_bar(cont *fyne.Container, win fyne.Window) *fyne.Container {
 	}
 	funCuotas := func() {
 		cont.Objects = []fyne.CanvasObject{}
-		cont.Add(cuotas.MainContainer(Index))
+		cont.Add(cuotas.MainContainer(Index, win))
 		cont.Refresh()
 		PaginaActual = "cuotas"
 	}

@@ -2,6 +2,7 @@ package cuotas
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"log"
 	"strconv"
@@ -12,6 +13,7 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -35,26 +37,14 @@ func getUserTable(index int) [51][4]string {
 	myArray[0] = [4]string{"Semana", "Fecha", "Estado", "Multas"}
 
 	// obtenemos los valores del usuario
-	var (
-		pagas   int
-		adeudas int
-		multas  string
-	)
-	err = db.QueryRow(
-		"SELECT pagas, adeudas, multas FROM cuotas WHERE id = ?",
-		index,
-	).Scan(&pagas, &adeudas, &multas)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	pagas := mySQL.GetValueInt("cuotas", "pagas", index)
+	adeudas := mySQL.GetValueInt("cuotas", "adeudas", index)
+	multas := mySQL.GetValueStr("cuotas", "multas", index)
+	bloqueos := mySQL.GetValueStr("cuotas", "bloqueos", index)
 
 	// creamos los arrays para codificar los datos
-
 	semanas_array := [50]string{}
 	pagas_array := [50]string{}
-
-	bloqueos := "9_7_2_19"
 
 	if bloqueos != "n" {
 		bloqueosArray := strings.Split(bloqueos, "_")
@@ -103,7 +93,6 @@ func getUserTable(index int) [51][4]string {
 	}
 
 	// creamos el calendario de pagos
-
 	calendario := mySQL.GetAjusteStr("calendario")
 	calendarioArray := strings.Split(calendario, "_")
 
@@ -126,38 +115,48 @@ func makeName(index int) *fyne.Container {
 
 	nombre := mySQL.GetValueStr("informacion_general", "nombre", index)
 	nombre = myfn.Title(nombre)
-
 	puestos := mySQL.GetValueInt("informacion_general", "puestos", index)
+	mensaje := fmt.Sprintf("№ %d - %s : %d puesto(s)", index, nombre, puestos)
 
-	mensaje := fmt.Sprintf("# № %d - %s : %d puesto(s)", index, nombre, puestos)
+	telefono := mySQL.GetValueStr("informacion_general", "telefono", index)
+	numeroT := fmt.Sprintf("Numero de telefono: %s", telefono)
 
-	// return container.NewVBox(
-	//     widget.NewRichTextFromMarkdown(mensaje),
-	// )
+	// widget.NewRichTextFromMarkdown(mensaje),
 
 	return container.NewVBox(
-		widget.NewCard(mensaje, "", nil),
-		// widget.NewRadioGroup([]string{"6:30pm", "7:00pm", "7:45pm"}, func(string) {}),
+		widget.NewCard(mensaje, numeroT, nil),
 	)
 }
 
-func makeFormPay(index int) fyne.CanvasObject {
+func makeFormPay(index int, win fyne.Window) fyne.CanvasObject {
+
+	var (
+		cuotasAPagar int    = 0
+		multasAPagar int    = 0
+		metodoDePago string = ""
+	)
 
 	cuotasPagar := widget.NewSelect(
-		[]string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
-		func(s string) {},
+		myfn.MakeRange(0, 10),
+		func(s string) {
+			cuotasAPagar, _ = strconv.Atoi(s)
+		},
 	)
 	cuotasPagar.PlaceHolder = "0"
 
 	multasPagar := widget.NewSelect(
-		[]string{"0", "1", "2"},
-		func(s string) {},
+		myfn.MakeRange(0, 5),
+		func(s string) {
+			multasAPagar, _ = strconv.Atoi(s)
+		},
 	)
 	multasPagar.PlaceHolder = "0"
 
 	metodoPago := widget.NewRadioGroup(
 		[]string{"Efectivo", "Transferencia"},
-		func(s string) {},
+		func(s string) {
+			metodoDePago = s
+		},
 	)
 
 	form := &widget.Form{
@@ -167,7 +166,15 @@ func makeFormPay(index int) fyne.CanvasObject {
 			{Text: "Metodo de pago:", Widget: metodoPago},
 		},
 		SubmitText: "Pagar",
-		OnSubmit:   func() {},
+		OnSubmit: func() {
+			result, err := rectificarPago(cuotasAPagar, multasAPagar, metodoDePago)
+
+			if result {
+				pagarCuotas(index, cuotasAPagar, multasAPagar, metodoDePago)
+			} else {
+				dialog.ShowError(errors.New(err), win)
+			}
+		},
 	}
 
 	return widget.NewCard("Formulario de pago:", "", form)
@@ -187,7 +194,9 @@ func makeFormBlock(index int) fyne.CanvasObject {
 			},
 		},
 		SubmitText: "(Des)Bloquear",
-		OnSubmit:   func() {},
+		OnSubmit: func() {
+			// bloqueos := mySQL.GetValueStr("cuotas", "bloqueos", index)
+		},
 	}
 
 	return widget.NewCard("(Des)Bloquear semanas:", "", form)
