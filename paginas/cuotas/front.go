@@ -18,6 +18,7 @@ func MainContainer() *container.Split {
 	nombre := makeName(index)
 	formulario := makeFormPay(index, win)
 	desBloqueo := makeFormBlock(index, win)
+	abrirCheque := makeOpenFile()
 
 	allContainer := container.NewHSplit(
 		container.NewHScroll(table),
@@ -26,6 +27,7 @@ func MainContainer() *container.Split {
 				nombre,
 				formulario,
 				desBloqueo,
+				abrirCheque,
 			),
 		),
 	)

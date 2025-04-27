@@ -207,6 +207,18 @@ func makeFormBlock(index int, win *fyne.Window) fyne.CanvasObject {
 			}
 		},
 	}
-
 	return widget.NewCard("(Des)Bloquear semanas:", "", form)
+}
+
+func makeOpenFile() fyne.CanvasObject {
+
+	contButtonOpen := container.NewCenter(
+		widget.NewButton(
+			"Abrir cheque", func() {
+
+			},
+		),
+	)
+
+	return widget.NewCard("Abrir ultimo cheque:", "", contButtonOpen)
 }

@@ -33,7 +33,7 @@ func rectificarBloqueo(rect string) (bool, string) {
 	}
 
 	if numRect < 1 || numRect > 50 {
-		return false, "El valor ingresado no esta en el intervalo dado"
+		return false, "El valor ingresado no esta en el intervalo estipulado"
 	}
 
 	return true, ""

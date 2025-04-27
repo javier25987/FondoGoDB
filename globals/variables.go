@@ -19,7 +19,7 @@ type Funciones struct {
 	Cuotas          func() *container.Split
 	Prestamos       func() *fyne.Container
 	Estado          func() *fyne.Container
-	Transferencias  func() *fyne.Container
+	Transferencias  func() *container.Split
 	Rifas           func() *fyne.Container
 	Anotaciones     func() *fyne.Container
 	VerSocios       func() *fyne.Container
@@ -47,12 +47,17 @@ func Refresh() {
 		Container2.Add(FuncionesInyect.Cuotas())
 		Container2.Refresh()
 		return
+		// NewContainer = FuncionesInyect.Cuotas()
 	case "prestamos":
 		NewContainer = FuncionesInyect.Prestamos()
 	case "estado":
 		NewContainer = FuncionesInyect.Estado()
 	case "transferencias":
-		NewContainer = FuncionesInyect.Transferencias()
+		Container2.Objects = []fyne.CanvasObject{}
+		Container2.Add(FuncionesInyect.Transferencias())
+		Container2.Refresh()
+		return
+		// NewContainer = FuncionesInyect.Transferencias()
 	case "rifas":
 		NewContainer = FuncionesInyect.Rifas()
 	case "anotaciones":
