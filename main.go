@@ -28,7 +28,9 @@ func main() {
 	globals.Container2 = myContainer
 
 	// Sidebar
-	sidebar := make_slide_bar(myContainer, myWindow)
+	sidebar := container.NewVScroll(
+		make_slide_bar(myContainer, myWindow),
+	)
 
 	// Contenedor general: Sidebar + Contenido principal
 	mainContainer := container.NewHSplit(sidebar, myContainer)

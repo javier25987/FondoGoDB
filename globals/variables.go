@@ -15,6 +15,7 @@ import (
 )
 
 type Funciones struct {
+	Menu            func() *fyne.Container
 	Cuotas          func() *container.Split
 	Prestamos       func() *fyne.Container
 	Estado          func() *fyne.Container
@@ -64,6 +65,8 @@ func Refresh() {
 		NewContainer = FuncionesInyect.ModificarSocios()
 	case "ajustes":
 		NewContainer = FuncionesInyect.Ajustes()
+	case "menu":
+		NewContainer = FuncionesInyect.Menu()
 	}
 
 	Container2.Objects = []fyne.CanvasObject{}

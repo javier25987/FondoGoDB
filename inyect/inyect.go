@@ -4,10 +4,12 @@ import (
 	"fondo/globals"
 
 	// importaciones de mis paquetes
+
 	"fondo/paginas/ajustes"
 	"fondo/paginas/anotaciones"
 	"fondo/paginas/cuotas"
 	"fondo/paginas/estado"
+	"fondo/paginas/menu"
 	"fondo/paginas/modificar_usuarios"
 	"fondo/paginas/prestamos"
 	"fondo/paginas/registros"
@@ -17,6 +19,7 @@ import (
 )
 
 func Inyect() {
+	globals.FuncionesInyect.Menu = menu.MainContainer
 	globals.FuncionesInyect.Cuotas = cuotas.MainContainer
 	globals.FuncionesInyect.Prestamos = prestamos.MainContainer
 	globals.FuncionesInyect.Estado = estado.MainContainer
