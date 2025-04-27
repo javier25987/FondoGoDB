@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 
+	"fondo/globals"
 	myfn "fondo/misFunciones"
 	mySQL "fondo/sql"
 
@@ -114,7 +115,7 @@ func getUserTable(index int) [51][4]string {
 func makeName(index int) *fyne.Container {
 
 	nombre := mySQL.GetValueStr("informacion_general", "nombre", index)
-	nombre = myfn.Title(nombre)
+	nombre = strings.Title(nombre)
 	puestos := mySQL.GetValueInt("informacion_general", "puestos", index)
 	mensaje := fmt.Sprintf("№ %d - %s : %d puesto(s)", index, nombre, puestos)
 
@@ -128,7 +129,7 @@ func makeName(index int) *fyne.Container {
 	)
 }
 
-func makeFormPay(index int, win fyne.Window) fyne.CanvasObject {
+func makeFormPay(index int, win *fyne.Window) fyne.CanvasObject {
 
 	var (
 		cuotasAPagar int    = 0
@@ -171,8 +172,9 @@ func makeFormPay(index int, win fyne.Window) fyne.CanvasObject {
 
 			if result {
 				pagarCuotas(index, cuotasAPagar, multasAPagar, metodoDePago)
+				globals.Refresh()
 			} else {
-				dialog.ShowError(errors.New(err), win)
+				dialog.ShowError(errors.New(err), *win)
 			}
 		},
 	}
@@ -180,7 +182,7 @@ func makeFormPay(index int, win fyne.Window) fyne.CanvasObject {
 	return widget.NewCard("Formulario de pago:", "", form)
 }
 
-func makeFormBlock(index int) fyne.CanvasObject {
+func makeFormBlock(index int, win *fyne.Window) fyne.CanvasObject {
 
 	semanasBlock := widget.NewEntry()
 	semanasBlock.PlaceHolder = "1 - 50"
@@ -195,7 +197,14 @@ func makeFormBlock(index int) fyne.CanvasObject {
 		},
 		SubmitText: "(Des)Bloquear",
 		OnSubmit: func() {
-			// bloqueos := mySQL.GetValueStr("cuotas", "bloqueos", index)
+			result, err := rectificarBloqueo(semanasBlock.Text)
+
+			if result {
+				makeBlock(index, semanasBlock.Text)
+				globals.Refresh()
+			} else {
+				dialog.ShowError(errors.New(err), *win)
+			}
 		},
 	}
 

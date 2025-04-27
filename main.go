@@ -6,13 +6,12 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
+
+	"fondo/globals"
+	"fondo/inyect"
 )
 
 // "fyne.io/fyne/v2/layout"
-
-var Admin bool = false // Variable para determinar si es administrador o no
-var Index int = 0      // determina el actual del fondo
-var PaginaActual string = ""
 
 func main() {
 
@@ -20,9 +19,13 @@ func main() {
 
 	myApp := app.New()
 	myWindow := myApp.NewWindow("Sidebar Demo")
+	globals.MyWindow = &myWindow
+
+	inyect.Inyect()
 
 	// Panel principal que irá cambiando con la navegación
 	myContainer := container.NewPadded()
+	globals.Container2 = myContainer
 
 	// Sidebar
 	sidebar := make_slide_bar(myContainer, myWindow)
