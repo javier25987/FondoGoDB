@@ -57,7 +57,8 @@ func MainContainer() *container.Split {
 		container.NewVBox(
 			widget.NewCard("Buscar por nombre:", "", formBuscarNombre),
 			widget.NewCard(
-				"Consultar acuerdo:", "Aca se muestra a todos los que tengan que firmar acuerdo",
+				"Consultar acuerdo:",
+				"Aca se muestra a todos los que tengan que firmar acuerdo",
 				containAcuerdos,
 			),
 			widget.NewCard("Buscar boletas:", "Pendiente a actualizacion", nil),

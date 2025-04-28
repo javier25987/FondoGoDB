@@ -22,11 +22,18 @@ func MainContainer() *container.Split {
 	selectUser := widget.NewSelect(
 		getAllUsers(), func(s string) {
 			if s == "TODOS" {
-				User = -1
+				dataContainer.Content = myfn.MakeTable4(
+					getUsersTable(), ProporcionTabla,
+				)
 			} else {
 				intValue, _ := strconv.Atoi(s)
 				User = intValue
+
+				dataContainer.Content = myfn.MakeTable4(
+					getUserTable(User), ProporcionTabla,
+				)
 			}
+			dataContainer.Refresh()
 		},
 	)
 	selectUser.PlaceHolder = "TODOS"
@@ -38,19 +45,6 @@ func MainContainer() *container.Split {
 				Widget:   selectUser,
 				HintText: "Seleccione el numero del usuario",
 			},
-		},
-		SubmitText: "Buscar",
-		OnSubmit: func() {
-			if User < 0 {
-				dataContainer.Content = myfn.MakeTable4(
-					getUsersTable(), ProporcionTabla,
-				)
-			} else {
-				dataContainer.Content = myfn.MakeTable4(
-					getUserTable(User), ProporcionTabla,
-				)
-			}
-			dataContainer.Refresh()
 		},
 	}
 
