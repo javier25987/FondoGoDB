@@ -1,12 +1,15 @@
 package main
 
 import (
+	// importaciones de la biblioteca standart
 	"log"
 
+	// importaciones de fyne
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 
+	// importaciones de mis paquetes
 	"fondo/globals"
 	"fondo/paginas/ajustes"
 	"fondo/paginas/anotaciones"
@@ -20,8 +23,6 @@ import (
 	"fondo/paginas/transferencias"
 	"fondo/paginas/ver_usuarios"
 )
-
-// "fyne.io/fyne/v2/layout"
 
 func main() {
 
@@ -51,6 +52,10 @@ func main() {
 	myWindow.ShowAndRun()
 }
 
+/*
+Esta funcion lo unico que hace es inyectar las funciones principales a una
+estructura en el paquete global
+*/
 func Inyect() {
 	globals.FuncionesInyect.Menu = menu.MainContainer
 	globals.FuncionesInyect.Cuotas = cuotas.MainContainer

@@ -15,17 +15,17 @@ import (
 )
 
 type Funciones struct {
-	Menu            func() *fyne.Container
+	Menu            func() *container.Split
 	Cuotas          func() *container.Split
-	Prestamos       func() *fyne.Container
-	Estado          func() *fyne.Container
+	Prestamos       func() *container.Split
+	Estado          func() *container.Split
 	Transferencias  func() *container.Split
-	Rifas           func() *fyne.Container
-	Anotaciones     func() *fyne.Container
+	Rifas           func() *container.Split
+	Anotaciones     func() *container.Split
 	VerSocios       func() *container.Split
-	Registros       func() *fyne.Container
-	ModificarSocios func() *fyne.Container
-	Ajustes         func() *fyne.Container
+	Registros       func() *container.Split
+	ModificarSocios func() *container.Split
+	Ajustes         func() *container.Split
 }
 
 var Admin bool = false // Variable para determinar si es administrador o no
@@ -38,36 +38,24 @@ var FuncionesInyect Funciones
 
 func Refresh() {
 
-	var NewContainer *fyne.Container
+	var NewContainer *container.Split
 
 	switch PaginaActual {
 
 	case "cuotas":
-		Container2.Objects = []fyne.CanvasObject{}
-		Container2.Add(FuncionesInyect.Cuotas())
-		Container2.Refresh()
-		return
-		// NewContainer = FuncionesInyect.Cuotas()
+		NewContainer = FuncionesInyect.Cuotas()
 	case "prestamos":
 		NewContainer = FuncionesInyect.Prestamos()
 	case "estado":
 		NewContainer = FuncionesInyect.Estado()
 	case "transferencias":
-		Container2.Objects = []fyne.CanvasObject{}
-		Container2.Add(FuncionesInyect.Transferencias())
-		Container2.Refresh()
-		return
-		// NewContainer = FuncionesInyect.Transferencias()
+		NewContainer = FuncionesInyect.Transferencias()
 	case "rifas":
 		NewContainer = FuncionesInyect.Rifas()
 	case "anotaciones":
 		NewContainer = FuncionesInyect.Anotaciones()
 	case "ver_usuarios":
-		Container2.Objects = []fyne.CanvasObject{}
-		Container2.Add(FuncionesInyect.VerSocios())
-		Container2.Refresh()
-		return
-		// NewContainer = FuncionesInyect.VerSocios()
+		NewContainer = FuncionesInyect.VerSocios()
 	case "registros":
 		NewContainer = FuncionesInyect.Registros()
 	case "modificar_usuarios":
