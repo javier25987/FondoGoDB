@@ -22,7 +22,7 @@ type Funciones struct {
 	Transferencias  func() *container.Split
 	Rifas           func() *fyne.Container
 	Anotaciones     func() *fyne.Container
-	VerSocios       func() *fyne.Container
+	VerSocios       func() *container.Split
 	Registros       func() *fyne.Container
 	ModificarSocios func() *fyne.Container
 	Ajustes         func() *fyne.Container
@@ -63,7 +63,11 @@ func Refresh() {
 	case "anotaciones":
 		NewContainer = FuncionesInyect.Anotaciones()
 	case "ver_usuarios":
-		NewContainer = FuncionesInyect.VerSocios()
+		Container2.Objects = []fyne.CanvasObject{}
+		Container2.Add(FuncionesInyect.VerSocios())
+		Container2.Refresh()
+		return
+		// NewContainer = FuncionesInyect.VerSocios()
 	case "registros":
 		NewContainer = FuncionesInyect.Registros()
 	case "modificar_usuarios":

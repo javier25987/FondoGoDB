@@ -20,7 +20,7 @@ func MakeTable(data [][]string) *widget.Table {
 }
 
 func MakeTableCuotas(data [51][4]string) *widget.Table {
-	return widget.NewTable(
+	table := widget.NewTable(
 		func() (int, int) {
 			return 51, 4
 		},
@@ -31,9 +31,14 @@ func MakeTableCuotas(data [51][4]string) *widget.Table {
 			o.(*widget.Label).SetText(data[i.Row][i.Col])
 		},
 	)
+	table.SetColumnWidth(0, 70)
+	table.SetColumnWidth(1, 110)
+	table.SetColumnWidth(2, 70)
+	table.SetColumnWidth(3, 70)
+	return table
 }
 
-func MakeTableTransf(data [][4]string) *widget.Table {
+func MakeTable4(data [][4]string, ajustes [4]float32) *widget.Table {
 	table := widget.NewTable(
 		func() (int, int) {
 			return len(data), 4 // filas, columnas
@@ -46,9 +51,9 @@ func MakeTableTransf(data [][4]string) *widget.Table {
 		},
 	)
 
-	table.SetColumnWidth(0, 80)
-	table.SetColumnWidth(1, 200)
-	table.SetColumnWidth(2, 200)
-	table.SetColumnWidth(3, 200)
+	table.SetColumnWidth(0, ajustes[0])
+	table.SetColumnWidth(1, ajustes[1])
+	table.SetColumnWidth(2, ajustes[2])
+	table.SetColumnWidth(3, ajustes[3])
 	return table
 }

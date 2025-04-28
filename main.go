@@ -8,7 +8,17 @@ import (
 	"fyne.io/fyne/v2/container"
 
 	"fondo/globals"
-	"fondo/inyect"
+	"fondo/paginas/ajustes"
+	"fondo/paginas/anotaciones"
+	"fondo/paginas/cuotas"
+	"fondo/paginas/estado"
+	"fondo/paginas/menu"
+	"fondo/paginas/modificar_usuarios"
+	"fondo/paginas/prestamos"
+	"fondo/paginas/registros"
+	"fondo/paginas/rifas"
+	"fondo/paginas/transferencias"
+	"fondo/paginas/ver_usuarios"
 )
 
 // "fyne.io/fyne/v2/layout"
@@ -18,10 +28,10 @@ func main() {
 	log.Println("Iniciando el programa...")
 
 	myApp := app.New()
-	myWindow := myApp.NewWindow("Sidebar Demo")
+	myWindow := myApp.NewWindow("Fondo San Javier")
 	globals.MyWindow = &myWindow
 
-	inyect.Inyect()
+	Inyect()
 
 	// Panel principal que irá cambiando con la navegación
 	myContainer := container.NewPadded()
@@ -39,4 +49,18 @@ func main() {
 	myWindow.SetContent(mainContainer)
 	myWindow.Resize(fyne.NewSize(800, 600))
 	myWindow.ShowAndRun()
+}
+
+func Inyect() {
+	globals.FuncionesInyect.Menu = menu.MainContainer
+	globals.FuncionesInyect.Cuotas = cuotas.MainContainer
+	globals.FuncionesInyect.Prestamos = prestamos.MainContainer
+	globals.FuncionesInyect.Estado = estado.MainContainer
+	globals.FuncionesInyect.Transferencias = transferencias.MainContainer
+	globals.FuncionesInyect.Rifas = rifas.MainContainer
+	globals.FuncionesInyect.Anotaciones = anotaciones.MainContainer
+	globals.FuncionesInyect.VerSocios = ver_usuarios.MainContainer
+	globals.FuncionesInyect.Registros = registros.MainContainer
+	globals.FuncionesInyect.ModificarSocios = modificar_usuarios.MainContainer
+	globals.FuncionesInyect.Ajustes = ajustes.MainContainer
 }

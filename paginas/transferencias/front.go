@@ -11,10 +11,11 @@ import (
 var User int = -1
 
 func MainContainer() *container.Split {
+	ProporcionTabla := [4]float32{80.0, 200.0, 200.0, 200.0}
 
 	dataContainer := container.NewScroll(
-		myfn.MakeTableTransf(
-			getUsersTable(),
+		myfn.MakeTable4(
+			getUsersTable(), ProporcionTabla,
 		),
 	)
 
@@ -41,12 +42,12 @@ func MainContainer() *container.Split {
 		SubmitText: "Buscar",
 		OnSubmit: func() {
 			if User < 0 {
-				dataContainer.Content = myfn.MakeTableTransf(
-					getUsersTable(),
+				dataContainer.Content = myfn.MakeTable4(
+					getUsersTable(), ProporcionTabla,
 				)
 			} else {
-				dataContainer.Content = myfn.MakeTableTransf(
-					getUserTable(User),
+				dataContainer.Content = myfn.MakeTable4(
+					getUserTable(User), ProporcionTabla,
 				)
 			}
 			dataContainer.Refresh()
