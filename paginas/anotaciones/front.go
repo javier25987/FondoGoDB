@@ -1,15 +1,21 @@
 package anotaciones
 
 import (
+	"fondo/globals"
+
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 )
 
 func MainContainer() *container.Split {
 
-	container1 := container.NewVBox(
-		widget.NewLabel("parte 1"),
-	)
+	Index := globals.Index
+
+	contNotas := container.NewVBox()
+	cargarAnotaciones(Index, contNotas)
+
+	container1 := container.NewScroll(contNotas)
+
 	container2 := container.NewVBox(
 		widget.NewLabel("parte 2"),
 	)

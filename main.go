@@ -2,7 +2,7 @@ package main
 
 import (
 	// importaciones de la biblioteca standart
-	"fmt"
+
 	"log"
 
 	// importaciones de fyne
@@ -54,8 +54,9 @@ func main() {
 }
 
 /*
-Esta funcion lo unico que hace es inyectar las funciones principales a una
-estructura en el paquete global
+Inyect es una funcion que carga todas las funciones principales de cada container a una
+estructura para ser usadas por la funcion globals.Refresh() esto mediante el paquete main
+evita una importacion circular, esta funcion debe ser usada en la funcion main al inicio.
 */
 func Inyect() {
 	globals.FuncionesInyect.Menu = menu.MainContainer
@@ -69,8 +70,4 @@ func Inyect() {
 	globals.FuncionesInyect.Registros = registros.MainContainer
 	globals.FuncionesInyect.ModificarSocios = modificar_usuarios.MainContainer
 	globals.FuncionesInyect.Ajustes = ajustes.MainContainer
-}
-
-func Saludar() {
-	fmt.Println("hola a todos")
 }
