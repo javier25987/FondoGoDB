@@ -2,6 +2,7 @@ package main
 
 import (
 	// importaciones de la biblioteca standart
+	"fmt"
 	"log"
 
 	// importaciones de fyne
@@ -68,4 +69,8 @@ func Inyect() {
 	globals.FuncionesInyect.Registros = registros.MainContainer
 	globals.FuncionesInyect.ModificarSocios = modificar_usuarios.MainContainer
 	globals.FuncionesInyect.Ajustes = ajustes.MainContainer
+}
+
+func Saludar() {
+	fmt.Println("hola a todos")
 }

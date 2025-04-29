@@ -1,11 +1,11 @@
 /*
-La simple existencia de este paquete es una aberracion ya que es una mala prectica
-pero para mi me sirve y es funcional
+Este paquete contiene la mala practica de cargar varibles y funciones a un
+modo global para ser usadas en otros paquetes, esto es asi ya que en varios
+casos se hacen importaciones circualares
 
 este paquete agrega una capa mas de complejidad al entorno ya que puede crear
-condiciones de carrera por esto la convenciones que solo el paquete main y el
-paquete inyect pueden cargar datos aca y los demas paquetes solo pueden usar
-la funcion `Refresh()`
+condiciones de carrera por esto la convenciones que solo el paquete main puede
+cargar datos aca y los demas paquetes solo pueden usar la funcion `Refresh()`
 */
 package globals
 
