@@ -5,11 +5,6 @@ go 1.24.1
 require fyne.io/fyne/v2 v2.6.0
 
 require (
-	golang.org/x/mod v0.24.0 // indirect
-	golang.org/x/tools v0.32.0 // indirect
-)
-
-require (
 	fyne.io/systray v1.11.0 // indirect
 	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect

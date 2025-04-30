@@ -1,7 +1,7 @@
 [Details]
   Icon = "Icon.png"
   Name = "FondoSanJavier"
-  Version = "0.3.5"
+  Version = "0.4.5"
 
 [Source]
   Repo = "https://github.com/javier25987/FondoGoDB"

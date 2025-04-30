@@ -8,7 +8,10 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 
+	mySQl "fondo/sql"
+
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -30,71 +33,76 @@ func cargarAnotaciones(index int, contain *fyne.Container) {
 
 	contain.Objects = []fyne.CanvasObject{}
 
-	for rows.Next() {
-		var (
-			general   string
-			monetaria string
-			multa     string
-			acuerdo   string
-		)
+	general := mySQl.GetValueStr("anotaciones", "general", index)
+	monetaria := mySQl.GetValueStr("anotaciones", "monetaria", index)
+	multa := mySQl.GetValueStr("anotaciones", "multa", index)
+	acuerdo := mySQl.GetValueStr("anotaciones", "acuerdo", index)
 
-		err := rows.Scan(&general, &monetaria, &multa, &acuerdo)
-		if err != nil {
-			log.Fatal(err)
+	contain.Add(widget.NewCard("GENERALES:", "", nil))
+	if general != "n" {
+		generalArray := strings.Split(general, "_")
+
+		for _, i := range generalArray {
+			contain.Add(
+				widget.NewCard(
+					"", i, nil,
+				),
+			)
 		}
+	}
 
-		contain.Add(widget.NewCard("GENERALES:", "", nil))
-		if general != "n" {
-			generalArray := strings.Split(general, "_")
+	contain.Add(widget.NewCard("MONETARIAS:", "", nil))
+	if monetaria != "n" {
+		monetariaArray := strings.Split(monetaria, "_")
 
-			for _, i := range generalArray {
-				contain.Add(
-					widget.NewCard(
-						"", i, nil,
-					),
-				)
-			}
+		for _, i := range monetariaArray {
+			contain.Add(
+				widget.NewCard(
+					"", i, nil,
+				),
+			)
 		}
+	}
 
-		contain.Add(widget.NewCard("MONETARIAS:", "", nil))
-		if monetaria != "n" {
-			monetariaArray := strings.Split(monetaria, "_")
+	contain.Add(widget.NewCard("MULTAS:", "", nil))
+	if multa != "n" {
+		multaArray := strings.Split(multa, "_")
 
-			for _, i := range monetariaArray {
-				contain.Add(
-					widget.NewCard(
-						"", i, nil,
-					),
-				)
-			}
+		for _, i := range multaArray {
+			contain.Add(
+				widget.NewCard(
+					"", i, nil,
+				),
+			)
 		}
+	}
 
-		contain.Add(widget.NewCard("MULTAS:", "", nil))
-		if multa != "n" {
-			multaArray := strings.Split(multa, "_")
+	contain.Add(widget.NewCard("ACUERDOS:", "", nil))
+	if acuerdo != "n" {
+		acuerdoArray := strings.Split(acuerdo, "_")
 
-			for _, i := range multaArray {
-				contain.Add(
-					widget.NewCard(
-						"", i, nil,
-					),
-				)
-			}
-		}
-
-		contain.Add(widget.NewCard("ACUERDOS:", "", nil))
-		if acuerdo != "n" {
-			acuerdoArray := strings.Split(acuerdo, "_")
-
-			for _, i := range acuerdoArray {
-				contain.Add(
-					widget.NewCard(
-						"", i, nil,
-					),
-				)
-			}
+		for _, i := range acuerdoArray {
+			contain.Add(
+				widget.NewCard(
+					"", i, nil,
+				),
+			)
 		}
 	}
 
 	contain.Refresh()
+}
+
+func makeName(index int) *fyne.Container {
+
+	nombre := mySQl.GetValueStr("informacion_general", "nombre", index)
+	nombre = strings.Title(nombre)
+
+	mensaje := fmt.Sprintf("№ %d : %s", index, nombre)
+
+	// widget.NewRichTextFromMarkdown(mensaje),
+
+	return container.NewVBox(
+		widget.NewCard(mensaje, "", nil),
+	)
 }
