@@ -41,7 +41,7 @@ func main() {
 
 	// Sidebar
 	sidebar := container.NewVScroll(
-		make_slide_bar(myContainer, myWindow),
+		make_slide_bar(myWindow),
 	)
 
 	// Contenedor general: Sidebar + Contenido principal

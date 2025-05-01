@@ -21,8 +21,8 @@
 * [ ]  cuotas
 * [ ]  prestamos
 * [ ]  rifas
-* [ ]  registros
-* [ ]  transferencias
+* [X]  registros
+* [X]  transferencias
 * [ ]  ver socios
 * [ ]  Anotaciones
 * [ ]  ajustes (temporal)

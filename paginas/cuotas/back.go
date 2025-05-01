@@ -58,7 +58,7 @@ func getUserTable(index int) [51][4]string {
 		}
 	}
 
-	for i := 0; i < 50; i++ {
+	for i := range 50 {
 		semanas_array[i] = strconv.Itoa(i + 1)
 
 		if pagas_array[i] == "b" {
@@ -102,7 +102,7 @@ func getUserTable(index int) [51][4]string {
 	}
 
 	// llenamos el array con los datos
-	for i := 0; i < 50; i++ {
+	for i := range 50 {
 		myArray[i+1][0] = semanas_array[i]
 		myArray[i+1][1] = calendarioArray[i]
 		myArray[i+1][2] = pagas_array[i]
@@ -131,11 +131,9 @@ func makeName(index int) *fyne.Container {
 
 func makeFormPay(index int, win *fyne.Window) fyne.CanvasObject {
 
-	var (
-		cuotasAPagar int    = 0
-		multasAPagar int    = 0
-		metodoDePago string = ""
-	)
+	cuotasAPagar := 0
+	multasAPagar := 0
+	metodoDePago := ""
 
 	cuotasPagar := widget.NewSelect(
 		myfn.MakeRange(0, 10),

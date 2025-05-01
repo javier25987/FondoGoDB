@@ -18,7 +18,7 @@ import (
 	"fondo/globals"
 )
 
-func make_slide_bar(cont *fyne.Container, win fyne.Window) *fyne.Container {
+func make_slide_bar(win fyne.Window) *fyne.Container {
 
 	// Paginas generales
 	btnMenu := widget.NewButton(
@@ -156,7 +156,6 @@ func make_slide_bar(cont *fyne.Container, win fyne.Window) *fyne.Container {
 		}
 
 		globals.Index = numeroUser
-		globals.Refresh()
 	})
 
 	setUser := container.NewVBox(
