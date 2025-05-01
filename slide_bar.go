@@ -2,10 +2,7 @@ package main
 
 import (
 	// importaciones de la biblioteca standart
-	"errors"
-	"fmt"
 	"log"
-	"strconv"
 
 	// importaciones de fyne
 	"fyne.io/fyne/v2"
@@ -16,6 +13,7 @@ import (
 
 	// importaciones de mis paquetes
 	"fondo/globals"
+	myfn "fondo/misFunciones"
 )
 
 func make_slide_bar(win fyne.Window) *fyne.Container {
@@ -65,7 +63,7 @@ func make_slide_bar(win fyne.Window) *fyne.Container {
 	)
 	btnVerSocios := widget.NewButton(
 		"🔍 ver socios", func() {
-			globals.PaginaActual = "ver_usuarios"
+			globals.PaginaActual = "ver usuarios"
 			globals.Refresh()
 		},
 	)
@@ -80,7 +78,7 @@ func make_slide_bar(win fyne.Window) *fyne.Container {
 		"modificar socios",
 		theme.WarningIcon(),
 		func() {
-			globals.PaginaActual = "modificar_usuarios"
+			globals.PaginaActual = "modificar usuarios"
 			globals.Refresh()
 		},
 	)
@@ -144,20 +142,16 @@ func make_slide_bar(win fyne.Window) *fyne.Container {
 
 	entradaUser := widget.NewEntry()
 
-	botonBuscar := widget.NewButton("🔎 Buscar", func() {
-		numeroUser, err := strconv.Atoi(entradaUser.Text)
+	botonBuscar := widget.NewButton(
+		"🔎 Buscar", func() {
+			err, numeroUser := myfn.RectNumber(entradaUser.Text)
 
-		if err != nil {
-			mensaje := fmt.Sprintf(
-				"[%s] No es un valor válido",
-				entradaUser.Text,
-			)
-			dialog.ShowError(errors.New(mensaje), win)
-		}
-
-		globals.Index = numeroUser
-		globals.Refresh()
-	})
+			if err {
+				globals.Index = numeroUser
+				globals.Refresh()
+			}
+		},
+	)
 
 	setUser := container.NewVBox(
 		entradaUser,

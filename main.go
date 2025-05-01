@@ -32,6 +32,7 @@ func main() {
 	myApp := app.New()
 	myWindow := myApp.NewWindow("Fondo San Javier")
 	globals.MyWindow = &myWindow
+	globals.WinDialog = myWindow
 
 	Inyect()
 
