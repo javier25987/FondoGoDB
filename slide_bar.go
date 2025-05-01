@@ -6,101 +6,67 @@ import (
 
 	// importaciones de fyne
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
-	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 
 	// importaciones de mis paquetes
 	"fondo/globals"
-	myfn "fondo/misFunciones"
 )
 
-func make_slide_bar(win fyne.Window) *fyne.Container {
+func make_slide_bar(win fyne.Window) *widget.Tree {
 
-	// Paginas generales
-	btnMenu := widget.NewButton(
-		"📘 menu", func() {
-			globals.PaginaActual = "menu"
-			globals.Refresh()
+	// Estado dinámico de las ramas
+	childrenMap := map[string][]string{
+		"": {"Paginas generales:", "Paginas administrativas:"},
+		"Paginas generales:": {
+			"📘 menu",
+			"📆 cuotas",
+			"💵 prestamos",
+			"📈 estado",
+			"🏛 transferencias",
+			"💰 rifas",
+			"📝 anotaciones",
+			"🔍 ver socios",
+			"📚 registros",
 		},
-	)
-	btnCuotas := widget.NewButton(
-		"📆 cuotas", func() {
-			globals.PaginaActual = "cuotas"
-			globals.Refresh()
+		"Paginas administrativas:": {"Ingresar"},
+	}
+
+	// Crear el árbol
+	tree := widget.NewTree(
+		// Función para obtener los hijos de un nodo
+		func(uid string) []string {
+			return childrenMap[uid]
 		},
-	)
-	btnPrestamos := widget.NewButton(
-		"💵 prestamos", func() {
-			globals.PaginaActual = "prestamos"
-			globals.Refresh()
+		// Función para verificar si es un nodo o una hoja
+		func(uid string) bool {
+			_, ok := childrenMap[uid]
+			return ok
 		},
-	)
-	btnEstado := widget.NewButton(
-		"📈 estado", func() {
-			globals.PaginaActual = "estado"
-			globals.Refresh()
+		// Crear el nodo
+		func(branch bool) fyne.CanvasObject {
+			return widget.NewLabel("Nodo") // Crear una etiqueta para los nodos
 		},
-	)
-	btnTransferencias := widget.NewButton(
-		"🏛 transferencias", func() {
-			globals.PaginaActual = "transferencias"
-			globals.Refresh()
-		},
-	)
-	btnRifas := widget.NewButton(
-		"💰 rifas", func() {
-			globals.PaginaActual = "rifas"
-			globals.Refresh()
-		},
-	)
-	btnAnotaciones := widget.NewButton(
-		"📝 anotaciones", func() {
-			globals.PaginaActual = "anotaciones"
-			globals.Refresh()
-		},
-	)
-	btnVerSocios := widget.NewButton(
-		"🔍 ver socios", func() {
-			globals.PaginaActual = "ver usuarios"
-			globals.Refresh()
-		},
-	)
-	btnRegistros := widget.NewButton(
-		"📚 registros", func() {
-			globals.PaginaActual = "registros"
-			globals.Refresh()
+		// Actualizar el nodo
+		func(uid string, branch bool, obj fyne.CanvasObject) {
+			// Aquí utilizamos `uid` para actualizar el nodo
+			obj.(*widget.Label).SetText(uid) // Actualizamos el texto con el `uid`
 		},
 	)
 
-	btnModificarSocios := widget.NewButtonWithIcon(
-		"modificar socios",
-		theme.WarningIcon(),
-		func() {
-			globals.PaginaActual = "modificar usuarios"
-			globals.Refresh()
-		},
-	)
-	btnAjustes := widget.NewButtonWithIcon(
-		"ajustes",
-		theme.SettingsIcon(),
-		func() {
-			globals.PaginaActual = "ajustes"
-			globals.Refresh()
-		},
-	)
+	tree.OpenAllBranches()
 
-	var adminContainer *fyne.Container
-	var btnIngresar *widget.Button
+	// Acción al seleccionar un nodo
+	tree.OnSelected = func(uid string) {
 
-	btnIngresar = widget.NewButtonWithIcon(
-		"ingresar",
-		theme.LoginIcon(),
-		func() {
+		refreshCont := true
+
+		switch uid {
+		case "Ingresar":
+
 			password := widget.NewPasswordEntry()
 			items := []*widget.FormItem{
-				widget.NewFormItem("Password", password),
+				widget.NewFormItem("Clave:", password),
 			}
 
 			dialog.ShowForm(
@@ -109,83 +75,53 @@ func make_slide_bar(win fyne.Window) *fyne.Container {
 				"Cancelar",
 				items,
 				func(b bool) {
-
 					if password.Text == "1234" {
-						adminContainer.Objects = []fyne.CanvasObject{
-							btnModificarSocios,
-							btnAjustes,
-							widget.NewButtonWithIcon(
-								"salir",
-								theme.LogoutIcon(),
-								func() {
-									adminContainer.Objects = []fyne.CanvasObject{}
-									adminContainer.Add(btnIngresar)
-									adminContainer.Refresh()
-									globals.Admin = false
-									log.Println("Modo administrador desactivado")
-								},
-							),
+						childrenMap["Paginas administrativas:"] = []string{
+							"✏️ modificar usuarios", "⚙️ ajustes", "Salir",
 						}
-						adminContainer.Refresh()
 						globals.Admin = true
 						log.Println("Modo administrador activado")
 					}
 				},
 				win,
 			)
-		},
-	)
+			refreshCont = false
 
-	adminContainer = container.NewVBox(
-		btnIngresar,
-	)
+		case "Salir":
+			childrenMap["Paginas administrativas:"] = []string{"Ingresar"}
+			log.Println("Modo administrador desactivado")
+			refreshCont = false
 
-	entradaUser := widget.NewEntry()
+		case "📘 menu":
+			globals.PaginaActual = "menu"
+		case "📆 cuotas":
+			globals.PaginaActual = "cuotas"
+		case "💵 prestamos":
+			globals.PaginaActual = "prestamos"
+		case "📈 estado":
+			globals.PaginaActual = "estado"
+		case "🏛 transferencias":
+			globals.PaginaActual = "transferencias"
+		case "💰 rifas":
+			globals.PaginaActual = "rifas"
+		case "📝 anotaciones":
+			globals.PaginaActual = "anotaciones"
+		case "🔍 ver socios":
+			globals.PaginaActual = "ver usuarios"
+		case "📚 registros":
+			globals.PaginaActual = "registros"
+		case "✏️ modificar usuarios":
+			globals.PaginaActual = "modificar usuarios"
+		case "⚙️ ajustes":
+			globals.PaginaActual = "ajustes"
+		}
 
-	botonBuscar := widget.NewButton(
-		"🔎 Buscar", func() {
-			err, numeroUser := myfn.RectNumber(entradaUser.Text)
+		if refreshCont {
+			globals.Refresh()
+		} else {
+			tree.Refresh()
+		}
+	}
 
-			if err {
-				globals.Index = numeroUser
-				globals.Refresh()
-			}
-		},
-	)
-
-	setUser := container.NewVBox(
-		entradaUser,
-		botonBuscar,
-	)
-
-	return container.NewVBox(
-		widget.NewLabelWithStyle(
-			"Paginas Generales",
-			fyne.TextAlignCenter,
-			fyne.TextStyle{Bold: true},
-		),
-		btnMenu,
-		btnCuotas,
-		btnPrestamos,
-		btnEstado,
-		btnTransferencias,
-		btnRifas,
-		btnAnotaciones,
-		btnVerSocios,
-		btnRegistros,
-
-		widget.NewLabelWithStyle(
-			"Paginas Administrativas",
-			fyne.TextAlignCenter,
-			fyne.TextStyle{Bold: true},
-		),
-		adminContainer,
-
-		widget.NewLabelWithStyle(
-			"Buscar Usuarios",
-			fyne.TextAlignCenter,
-			fyne.TextStyle{Bold: true},
-		),
-		setUser,
-	)
+	return tree
 }
