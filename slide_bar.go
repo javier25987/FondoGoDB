@@ -156,6 +156,7 @@ func make_slide_bar(win fyne.Window) *fyne.Container {
 		}
 
 		globals.Index = numeroUser
+		globals.Refresh()
 	})
 
 	setUser := container.NewVBox(
