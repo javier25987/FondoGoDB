@@ -31,7 +31,7 @@ func MainContainer() *container.Split {
 			),
 		),
 	)
-	allContainer.SetOffset(0.35)
+	allContainer.SetOffset(0.4)
 
 	return allContainer
 }
