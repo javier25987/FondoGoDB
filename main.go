@@ -9,6 +9,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
 
 	// importaciones de mis paquetes
 	"fondo/globals"
@@ -23,6 +24,8 @@ import (
 	"fondo/paginas/rifas"
 	"fondo/paginas/transferencias"
 	"fondo/paginas/ver_usuarios"
+
+	myfn "fondo/misFunciones"
 )
 
 func main() {
@@ -32,6 +35,7 @@ func main() {
 	myApp := app.New()
 	myWindow := myApp.NewWindow("Fondo San Javier")
 	globals.MyWindow = &myWindow
+	globals.WinDialog = myWindow
 
 	Inyect()
 
@@ -44,9 +48,37 @@ func main() {
 		make_slide_bar(myWindow),
 	)
 
+	entradaUser := widget.NewEntry()
+
+	botonBuscar := widget.NewButton(
+		"🔎 Buscar", func() {
+			err, numeroUser := myfn.RectNumber(entradaUser.Text)
+
+			if err {
+				globals.Index = numeroUser
+				globals.Refresh()
+			}
+		},
+	)
+
+	setUser := container.NewVBox(
+		widget.NewLabelWithStyle(
+			"Buscar Usuarios",
+			fyne.TextAlignCenter,
+			fyne.TextStyle{Bold: true},
+		),
+		entradaUser,
+		botonBuscar,
+	)
+
+	barContain := container.NewVSplit(
+		sidebar, setUser,
+	)
+	barContain.SetOffset(0.9)
+
 	// Contenedor general: Sidebar + Contenido principal
-	mainContainer := container.NewHSplit(sidebar, myContainer)
-	mainContainer.SetOffset(0.1) // Tamaño relativo de la barra lateral
+	mainContainer := container.NewHSplit(barContain, myContainer)
+	mainContainer.SetOffset(0.18) // Tamaño relativo de la barra lateral
 
 	myWindow.SetContent(mainContainer)
 	myWindow.Resize(fyne.NewSize(800, 600))

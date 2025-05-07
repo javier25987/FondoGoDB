@@ -51,7 +51,7 @@ func MainContainer() *container.Split {
 	finalContain := container.NewHSplit(
 		container1, container2,
 	)
-	finalContain.SetOffset(0.6)
+	finalContain.SetOffset(0.5)
 
 	return finalContain
 }

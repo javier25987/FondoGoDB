@@ -34,6 +34,8 @@ var PaginaActual string = ""
 var MyWindow *fyne.Window
 var Container2 *fyne.Container
 
+var WinDialog fyne.Window
+
 var FuncionesInyect Funciones
 
 func Refresh() {
@@ -54,11 +56,11 @@ func Refresh() {
 		NewContainer = FuncionesInyect.Rifas()
 	case "anotaciones":
 		NewContainer = FuncionesInyect.Anotaciones()
-	case "ver_usuarios":
+	case "ver usuarios":
 		NewContainer = FuncionesInyect.VerSocios()
 	case "registros":
 		NewContainer = FuncionesInyect.Registros()
-	case "modificar_usuarios":
+	case "modificar usuarios":
 		NewContainer = FuncionesInyect.ModificarSocios()
 	case "ajustes":
 		NewContainer = FuncionesInyect.Ajustes()
