@@ -9,7 +9,7 @@ import (
 	mySQl "fondo/sql"
 
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/container"
+	// "fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -80,7 +80,7 @@ func cargarAnotaciones(index int, contain *fyne.Container) {
 	contain.Refresh()
 }
 
-func makeName(index int) *fyne.Container {
+func makeName(index int) *widget.Card {
 
 	nombre := mySQl.GetValueStr("informacion_general", "nombre", index)
 	nombre = strings.Title(nombre)
@@ -89,7 +89,37 @@ func makeName(index int) *fyne.Container {
 
 	// widget.NewRichTextFromMarkdown(mensaje),
 
-	return container.NewVBox(
-		widget.NewCard(mensaje, "", nil),
+	return widget.NewCard(mensaje, "", nil)
+}
+
+func makeHacerMulta(index int) *widget.Card {
+	anotacion := widget.NewEntry()
+
+	monto := widget.NewEntry()
+
+	motivoAnota := widget.NewSelect(
+		[]string{"General", "Monetaria", "Multa", "Acuerdo"},
+		func(s string) {
+
+		},
 	)
+	motivoAnota.PlaceHolder = "General"
+
+	form := &widget.Form{
+		Items: []*widget.FormItem{
+			{Text: "Anotacion:", Widget: anotacion, HintText: "No incluya los simbolos { _ [ ] }"},
+			{Text: "Monto:", Widget: monto, HintText: "Se pueden incluir numeros negativos"},
+			{Text: "Motivo:", Widget: motivoAnota},
+		},
+		SubmitText: "Realizar anotacion",
+		OnSubmit: func() {
+
+		},
+	}
+
+	return widget.NewCard("Hacer una anotacion:", "", form)
+}
+
+func makePago(index int) *widget.Card {
+	return widget.NewCard("Pagar:", "", nil)
 }

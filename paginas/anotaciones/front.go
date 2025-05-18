@@ -1,10 +1,10 @@
 package anotaciones
 
 import (
+	"fondo/buscar"
 	"fondo/globals"
 
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
 )
 
 func MainContainer() *container.Split {
@@ -16,37 +16,11 @@ func MainContainer() *container.Split {
 
 	container1 := container.NewScroll(contNotas)
 
-	anotacion := widget.NewEntry()
-
-	monto := widget.NewEntry()
-
-	motivoAnota := widget.NewSelect(
-		[]string{"General", "Monetaria", "Multa", "Acuerdo"},
-		func(s string) {
-
-		},
-	)
-	motivoAnota.PlaceHolder = "General"
-
-	form := &widget.Form{
-		Items: []*widget.FormItem{
-			{Text: "Anotacion:", Widget: anotacion, HintText: "No incluya los simbolos { _ [ ] }"},
-			{Text: "Monto:", Widget: monto, HintText: "Se pueden incluir numeros negativos"},
-			{Text: "Motivo:", Widget: motivoAnota},
-		},
-		SubmitText: "Realizar anotacion",
-		OnSubmit: func() {
-
-		},
-	}
-
-	nombre := makeName(Index)
-
 	container2 := container.NewVBox(
-		nombre,
-		widget.NewCard(
-			"Hacer una anotacion:", "", form,
-		),
+		makeName(Index),        // nombre
+		makeHacerMulta(Index),  //formato para hacer una anotacion
+		buscar.SearchContain(), // buscar usuario
+		makePago(Index),        // hacer un pago
 	)
 
 	finalContain := container.NewHSplit(
