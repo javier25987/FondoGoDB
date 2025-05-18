@@ -19,7 +19,7 @@ func make_slide_bar(win fyne.Window) *widget.Tree {
 	childrenMap := map[string][]string{
 		"": {"Paginas generales:", "Paginas administrativas:"},
 		"Paginas generales:": {
-			"📘 menu",
+			// "📘 menu",
 			"📆 cuotas",
 			"💵 prestamos",
 			"📈 estado",

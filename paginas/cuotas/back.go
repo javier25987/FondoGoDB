@@ -133,7 +133,7 @@ func makeFormPay(index int, win *fyne.Window) fyne.CanvasObject {
 
 	cuotasAPagar := 0
 	multasAPagar := 0
-	metodoDePago := ""
+	metodoDePago := "Efectivo"
 
 	cuotasPagar := widget.NewSelect(
 		myfn.MakeRange(0, 10),
@@ -151,12 +151,13 @@ func makeFormPay(index int, win *fyne.Window) fyne.CanvasObject {
 	)
 	multasPagar.PlaceHolder = "0"
 
-	metodoPago := widget.NewRadioGroup(
+	metodoPago := widget.NewSelect(
 		[]string{"Efectivo", "Transferencia"},
 		func(s string) {
 			metodoDePago = s
 		},
 	)
+	metodoPago.PlaceHolder = "Efectivo"
 
 	form := &widget.Form{
 		Items: []*widget.FormItem{

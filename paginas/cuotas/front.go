@@ -1,6 +1,7 @@
 package cuotas
 
 import (
+	"fondo/buscar"
 	"fondo/globals"
 	myfn "fondo/misFunciones"
 
@@ -14,20 +15,17 @@ func MainContainer() *container.Split {
 	data := getUserTable(index)
 	table := myfn.MakeTableCuotas(data)
 
-	// todos estos son los elementos habituales pero los planeo manejar por tarjetas
-	nombre := makeName(index)
-	formulario := makeFormPay(index, win)
-	desBloqueo := makeFormBlock(index, win)
-	abrirCheque := makeOpenFile()
-
 	allContainer := container.NewHSplit(
 		container.NewScroll(table),
-		container.NewPadded(
-			container.NewVBox(
-				nombre,
-				formulario,
-				desBloqueo,
-				abrirCheque,
+		container.NewScroll(
+			container.NewPadded(
+				container.NewVBox(
+					makeName(index),         // nombre
+					makeFormPay(index, win), // formulario de pago
+					buscar.SearchContain(),
+					makeOpenFile(),
+					makeFormBlock(index, win), // bloqueo
+				),
 			),
 		),
 	)

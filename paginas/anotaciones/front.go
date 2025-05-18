@@ -20,12 +20,13 @@ func MainContainer() *container.Split {
 
 	monto := widget.NewEntry()
 
-	motivoAnota := widget.NewRadioGroup(
+	motivoAnota := widget.NewSelect(
 		[]string{"General", "Monetaria", "Multa", "Acuerdo"},
 		func(s string) {
 
 		},
 	)
+	motivoAnota.PlaceHolder = "General"
 
 	form := &widget.Form{
 		Items: []*widget.FormItem{

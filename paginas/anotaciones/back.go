@@ -13,12 +13,10 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-/*
-La funcion cargarcargarAnotaciones() lo unico que hace es tomar un contenedor y cargar en el
-una lista de todas las anotaciones realizadas, esta funcion toma como argumentos el index del
-usuario para el cual queremos leer sus anotaciones y el contenedor al cual lo vamos a cargar
-todo
-*/
+// La funcion cargarcargarAnotaciones() lo unico que hace es tomar un contenedor y cargar en el
+// una lista de todas las anotaciones realizadas, esta funcion toma como argumentos el index del
+// usuario para el cual queremos leer sus anotaciones y el contenedor al cual lo vamos a cargar
+// todo
 func cargarAnotaciones(index int, contain *fyne.Container) {
 
 	// limpiar contanido del contenedor
