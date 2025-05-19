@@ -11,7 +11,7 @@ import (
 func makeGenEstado() *widget.Card {
 	datos := getGenData()
 
-	nombres := [8]string{
+	nombres := [9]string{
 		"Total capital:",
 		"Total multas pagas:",
 		"Total multas temporales:",
@@ -20,6 +20,7 @@ func makeGenEstado() *widget.Card {
 		"Total intereses pagados:",
 		"Total Intereses en deuda:",
 		"Total deuda por prestamos:",
+		"Total pagado en transferencias:",
 	}
 
 	var texto string
