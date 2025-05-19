@@ -8,7 +8,7 @@ import (
 func MainContainer() *container.Split {
 
 	container1 := container.NewVBox(
-		widget.NewLabel("parte 1"),
+		makeGenEstado(),
 	)
 	container2 := container.NewVBox(
 		widget.NewLabel("parte 2"),

@@ -33,61 +33,45 @@ func cargarAnotaciones(index int, contain *fyne.Container) {
 	multa := mySQl.GetValueStr("anotaciones", "multa", index)
 	acuerdo := mySQl.GetValueStr("anotaciones", "acuerdo", index)
 
-	contain.Add(widget.NewCard("GENERALES:", "", nil))
+	mensage := "# Anotaciones hechas:\n"
+
 	if general != "n" {
+		mensage += "## Generales:\n"
 		for i := range strings.SplitSeq(general, "_") {
-			contain.Add(
-				widget.NewCard(
-					"", i, nil,
-				),
-			)
+			mensage += "* " + i + "\n"
 		}
 	}
 
-	contain.Add(widget.NewCard("MONETARIAS:", "", nil))
 	if monetaria != "n" {
+		mensage += "## Monetarias:\n"
 		for i := range strings.SplitSeq(monetaria, "_") {
-			contain.Add(
-				widget.NewCard(
-					"", i, nil,
-				),
-			)
+			mensage += "* " + i + "\n"
 		}
 	}
 
-	contain.Add(widget.NewCard("MULTAS:", "", nil))
 	if multa != "n" {
+		mensage += "## Multas:\n"
 		for i := range strings.SplitSeq(multa, "_") {
-			contain.Add(
-				widget.NewCard(
-					"", i, nil,
-				),
-			)
+			mensage += "* " + i + "\n"
 		}
 	}
 
-	contain.Add(widget.NewCard("ACUERDOS:", "", nil))
 	if acuerdo != "n" {
+		mensage += "## Acuerdos:\n"
 		for i := range strings.SplitSeq(acuerdo, "_") {
-			contain.Add(
-				widget.NewCard(
-					"", i, nil,
-				),
-			)
+			mensage += "* " + i + "\n"
 		}
 	}
 
+	contain.Add(widget.NewRichTextFromMarkdown(mensage))
 	contain.Refresh()
 }
 
 func makeName(index int) *widget.Card {
-
 	nombre := mySQl.GetValueStr("informacion_general", "nombre", index)
 	nombre = strings.Title(nombre)
 
-	mensaje := fmt.Sprintf("№ %d : %s", index, nombre)
-
-	// widget.NewRichTextFromMarkdown(mensaje),
+	mensaje := fmt.Sprintf("№ %d : %s", index, nombre) // widget.NewRichTextFromMarkdown(mensaje),
 
 	return widget.NewCard(mensaje, "", nil)
 }
@@ -116,7 +100,6 @@ func makeHacerMulta(index int) *widget.Card {
 
 		},
 	}
-
 	return widget.NewCard("Hacer una anotacion:", "", form)
 }
 
