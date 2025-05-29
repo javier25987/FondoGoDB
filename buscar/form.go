@@ -3,8 +3,8 @@ package buscar
 import (
 	"fyne.io/fyne/v2/widget"
 
-	"fondo/globals"
-	myfn "fondo/misFunciones"
+	"fondo/funcs"
+	"fondo/global"
 )
 
 func SearchContain() *widget.Card {
@@ -17,11 +17,11 @@ func SearchContain() *widget.Card {
 		},
 		SubmitText: "Buscar",
 		OnSubmit: func() {
-			err, numeroUser := myfn.RectNumber(numero.Text)
+			err, numeroUser := funcs.RectNumber(numero.Text)
 
 			if err {
-				globals.Index = numeroUser
-				globals.Refresh()
+				global.Index = numeroUser
+				global.Refresh()
 			}
 		},
 	}

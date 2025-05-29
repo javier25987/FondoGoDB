@@ -1,7 +1,7 @@
 package ver_usuarios
 
 import (
-	myfn "fondo/misFunciones"
+	"fondo/funcs"
 
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
@@ -12,7 +12,7 @@ func MainContainer() *container.Split {
 	porTablaBuscar := [4]float32{70, 200, 100, 100}
 
 	containTablas := container.NewScroll(
-		myfn.MakeTable4(
+		funcs.MakeTable4(
 			getAllUsers(), porTablaBuscar,
 		),
 	)
@@ -30,11 +30,11 @@ func MainContainer() *container.Split {
 		SubmitText: "Buscar",
 		OnSubmit: func() {
 			if nombreABuscar.Text == "" {
-				containTablas.Content = myfn.MakeTable4(
+				containTablas.Content = funcs.MakeTable4(
 					getAllUsers(), porTablaBuscar,
 				)
 			} else {
-				containTablas.Content = myfn.MakeTable4(
+				containTablas.Content = funcs.MakeTable4(
 					getNameUsers(nombreABuscar.Text), porTablaBuscar,
 				)
 			}
@@ -45,7 +45,7 @@ func MainContainer() *container.Split {
 	containAcuerdos := container.NewCenter(
 		widget.NewButton(
 			"Consultar", func() {
-				containTablas.Content = myfn.MakeTable4(
+				containTablas.Content = funcs.MakeTable4(
 					getAcuerdos(), porTablaBuscar,
 				)
 				containTablas.Refresh()

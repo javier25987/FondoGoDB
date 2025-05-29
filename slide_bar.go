@@ -10,7 +10,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 
 	// importaciones de mis paquetes
-	"fondo/globals"
+	"fondo/global"
 )
 
 func make_slide_bar(win fyne.Window) *widget.Tree {
@@ -79,7 +79,7 @@ func make_slide_bar(win fyne.Window) *widget.Tree {
 						childrenMap["Paginas administrativas:"] = []string{
 							"✏️ modificar usuarios", "⚙️ ajustes", "Salir",
 						}
-						globals.Admin = true
+						global.Admin = true
 						log.Println("Modo administrador activado")
 					}
 				},
@@ -93,31 +93,31 @@ func make_slide_bar(win fyne.Window) *widget.Tree {
 			refreshCont = false
 
 		case "📘 menu":
-			globals.PaginaActual = "menu"
+			global.PaginaActual = "menu"
 		case "📆 cuotas":
-			globals.PaginaActual = "cuotas"
+			global.PaginaActual = "cuotas"
 		case "💵 prestamos":
-			globals.PaginaActual = "prestamos"
+			global.PaginaActual = "prestamos"
 		case "📈 estado":
-			globals.PaginaActual = "estado"
+			global.PaginaActual = "estado"
 		case "🏛 transferencias":
-			globals.PaginaActual = "transferencias"
+			global.PaginaActual = "transferencias"
 		case "💰 rifas":
-			globals.PaginaActual = "rifas"
+			global.PaginaActual = "rifas"
 		case "📝 anotaciones":
-			globals.PaginaActual = "anotaciones"
+			global.PaginaActual = "anotaciones"
 		case "🔍 ver socios":
-			globals.PaginaActual = "ver usuarios"
+			global.PaginaActual = "ver usuarios"
 		case "📚 registros":
-			globals.PaginaActual = "registros"
+			global.PaginaActual = "registros"
 		case "✏️ modificar usuarios":
-			globals.PaginaActual = "modificar usuarios"
+			global.PaginaActual = "modificar usuarios"
 		case "⚙️ ajustes":
-			globals.PaginaActual = "ajustes"
+			global.PaginaActual = "ajustes"
 		}
 
 		if refreshCont {
-			globals.Refresh()
+			global.Refresh()
 		} else {
 			tree.Refresh()
 		}

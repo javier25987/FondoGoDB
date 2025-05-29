@@ -2,14 +2,14 @@ package anotaciones
 
 import (
 	"fondo/buscar"
-	"fondo/globals"
+	"fondo/global"
 
 	"fyne.io/fyne/v2/container"
 )
 
 func MainContainer() *container.Split {
 
-	Index := globals.Index
+	Index := global.Index
 
 	contNotas := container.NewVBox()
 	cargarAnotaciones(Index, contNotas)

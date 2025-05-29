@@ -1,4 +1,4 @@
-package misfunciones
+package funcs
 
 import (
 	"fyne.io/fyne/v2"

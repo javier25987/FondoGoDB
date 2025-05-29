@@ -5,7 +5,7 @@ import (
 	"log"
 	"strconv"
 
-	myfn "fondo/misFunciones"
+	"fondo/funcs"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -76,7 +76,7 @@ func getUsersTable() [][4]string {
 			log.Fatal(err)
 		}
 
-		fmtMonto = myfn.FormatComas(monto)
+		fmtMonto = funcs.FormatComas(monto)
 
 		allUsers = append(
 			allUsers,
@@ -124,7 +124,7 @@ func getUserTable(index int) [][4]string {
 			log.Fatal(err)
 		}
 
-		fmtMonto = myfn.FormatComas(monto)
+		fmtMonto = funcs.FormatComas(monto)
 
 		allUsers = append(
 			allUsers,

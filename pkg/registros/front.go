@@ -1,7 +1,7 @@
 package registros
 
 import (
-	myfn "fondo/misFunciones"
+	"fondo/funcs"
 
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
@@ -12,13 +12,13 @@ func MainContainer() *container.Split {
 	proporcionTable := [4]float32{100, 150, 150, 150}
 
 	container2 := container.NewScroll(
-		myfn.MakeTable4(getRegistros("01"), proporcionTable),
+		funcs.MakeTable4(getRegistros("01"), proporcionTable),
 	)
 
 	mesesSelect := widget.NewSelect(
 		[]string{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"},
 		func(s string) {
-			container2.Content = myfn.MakeTable4(
+			container2.Content = funcs.MakeTable4(
 				getRegistros(s), proporcionTable,
 			)
 			container2.Refresh()

@@ -1,9 +1,9 @@
-package misfunciones
+package funcs
 
 import (
 	"errors"
 	"fmt"
-	"fondo/globals"
+	globals "fondo/global"
 	"strconv"
 
 	"fyne.io/fyne/v2/dialog"

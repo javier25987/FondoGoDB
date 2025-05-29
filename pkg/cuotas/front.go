@@ -2,27 +2,27 @@ package cuotas
 
 import (
 	"fondo/buscar"
-	"fondo/globals"
-	myfn "fondo/misFunciones"
+	"fondo/funcs"
+	"fondo/global"
 
 	"fyne.io/fyne/v2/container"
 )
 
 func MainContainer() *container.Split {
-	index := globals.Index
-	win := globals.MyWindow
+	index := global.Index
+	win := global.MyWindow
 
 	data := getUserTable(index)
-	table := myfn.MakeTableCuotas(data)
+	table := funcs.MakeTableCuotas(data)
 
 	allContainer := container.NewHSplit(
 		container.NewScroll(table),
 		container.NewScroll(
 			container.NewPadded(
 				container.NewVBox(
+					buscar.SearchContain(),
 					makeName(index),         // nombre
 					makeFormPay(index, win), // formulario de pago
-					buscar.SearchContain(),
 					makeOpenFile(),
 					makeFormBlock(index, win), // bloqueo
 				),

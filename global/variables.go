@@ -7,7 +7,7 @@ este paquete agrega una capa mas de complejidad al entorno ya que puede crear
 condiciones de carrera por esto la convenciones que solo el paquete main puede
 cargar datos aca y los demas paquetes solo pueden usar la funcion `Refresh()`
 */
-package globals
+package global
 
 import (
 	"fyne.io/fyne/v2"
