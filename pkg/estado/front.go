@@ -1,17 +1,18 @@
 package estado
 
 import (
+	"fondo/buscar"
+
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
 )
 
 func MainContainer() *container.Split {
 
-	container1 := container.NewVBox(
-		widget.NewLabel("parte 1"),
+	container1 := container.NewVScroll(
+		makeGenEstado(),
 	)
-	container2 := container.NewVBox(
-		widget.NewLabel("parte 2"),
+	container2 := container.NewVScroll(
+		buscar.SearchContain(),
 	)
 
 	finalContain := container.NewHSplit(

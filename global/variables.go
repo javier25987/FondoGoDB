@@ -7,7 +7,7 @@ este paquete agrega una capa mas de complejidad al entorno ya que puede crear
 condiciones de carrera por esto la convenciones que solo el paquete main puede
 cargar datos aca y los demas paquetes solo pueden usar la funcion `Refresh()`
 */
-package globals
+package global
 
 import (
 	"fyne.io/fyne/v2"
@@ -34,6 +34,8 @@ var PaginaActual string = ""
 var MyWindow *fyne.Window
 var Container2 *fyne.Container
 
+var WinDialog fyne.Window
+
 var FuncionesInyect Funciones
 
 func Refresh() {
@@ -54,11 +56,11 @@ func Refresh() {
 		NewContainer = FuncionesInyect.Rifas()
 	case "anotaciones":
 		NewContainer = FuncionesInyect.Anotaciones()
-	case "ver_usuarios":
+	case "ver usuarios":
 		NewContainer = FuncionesInyect.VerSocios()
 	case "registros":
 		NewContainer = FuncionesInyect.Registros()
-	case "modificar_usuarios":
+	case "modificar usuarios":
 		NewContainer = FuncionesInyect.ModificarSocios()
 	case "ajustes":
 		NewContainer = FuncionesInyect.Ajustes()

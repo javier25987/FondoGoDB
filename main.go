@@ -2,7 +2,6 @@ package main
 
 import (
 	// importaciones de la biblioteca standart
-
 	"log"
 
 	// importaciones de fyne
@@ -11,42 +10,39 @@ import (
 	"fyne.io/fyne/v2/container"
 
 	// importaciones de mis paquetes
-	"fondo/globals"
-	"fondo/paginas/ajustes"
-	"fondo/paginas/anotaciones"
-	"fondo/paginas/cuotas"
-	"fondo/paginas/estado"
-	"fondo/paginas/menu"
-	"fondo/paginas/modificar_usuarios"
-	"fondo/paginas/prestamos"
-	"fondo/paginas/registros"
-	"fondo/paginas/rifas"
-	"fondo/paginas/transferencias"
-	"fondo/paginas/ver_usuarios"
+	"fondo/global"
+	"fondo/pkg/ajustes"
+	"fondo/pkg/anotaciones"
+	"fondo/pkg/cuotas"
+	"fondo/pkg/estado"
+	"fondo/pkg/menu"
+	"fondo/pkg/modificar_usuarios"
+	"fondo/pkg/prestamos"
+	"fondo/pkg/registros"
+	"fondo/pkg/rifas"
+	"fondo/pkg/transferencias"
+	"fondo/pkg/ver_usuarios"
 )
 
 func main() {
-
 	log.Println("Iniciando el programa...")
 
 	myApp := app.New()
 	myWindow := myApp.NewWindow("Fondo San Javier")
-	globals.MyWindow = &myWindow
+	global.MyWindow = &myWindow
+	global.WinDialog = myWindow
 
 	Inyect()
 
 	// Panel principal que irá cambiando con la navegación
 	myContainer := container.NewPadded()
-	globals.Container2 = myContainer
-
-	// Sidebar
-	sidebar := container.NewVScroll(
-		make_slide_bar(myWindow),
-	)
+	global.Container2 = myContainer
 
 	// Contenedor general: Sidebar + Contenido principal
-	mainContainer := container.NewHSplit(sidebar, myContainer)
-	mainContainer.SetOffset(0.1) // Tamaño relativo de la barra lateral
+	mainContainer := container.NewHSplit(
+		make_slide_bar(myWindow), myContainer,
+	)
+	mainContainer.SetOffset(0.18) // Tamaño relativo de la barra lateral
 
 	myWindow.SetContent(mainContainer)
 	myWindow.Resize(fyne.NewSize(800, 600))
@@ -59,15 +55,15 @@ estructura para ser usadas por la funcion globals.Refresh() esto mediante el paq
 evita una importacion circular, esta funcion debe ser usada en la funcion main al inicio.
 */
 func Inyect() {
-	globals.FuncionesInyect.Menu = menu.MainContainer
-	globals.FuncionesInyect.Cuotas = cuotas.MainContainer
-	globals.FuncionesInyect.Prestamos = prestamos.MainContainer
-	globals.FuncionesInyect.Estado = estado.MainContainer
-	globals.FuncionesInyect.Transferencias = transferencias.MainContainer
-	globals.FuncionesInyect.Rifas = rifas.MainContainer
-	globals.FuncionesInyect.Anotaciones = anotaciones.MainContainer
-	globals.FuncionesInyect.VerSocios = ver_usuarios.MainContainer
-	globals.FuncionesInyect.Registros = registros.MainContainer
-	globals.FuncionesInyect.ModificarSocios = modificar_usuarios.MainContainer
-	globals.FuncionesInyect.Ajustes = ajustes.MainContainer
+	global.FuncionesInyect.Menu = menu.MainContainer
+	global.FuncionesInyect.Cuotas = cuotas.MainContainer
+	global.FuncionesInyect.Prestamos = prestamos.MainContainer
+	global.FuncionesInyect.Estado = estado.MainContainer
+	global.FuncionesInyect.Transferencias = transferencias.MainContainer
+	global.FuncionesInyect.Rifas = rifas.MainContainer
+	global.FuncionesInyect.Anotaciones = anotaciones.MainContainer
+	global.FuncionesInyect.VerSocios = ver_usuarios.MainContainer
+	global.FuncionesInyect.Registros = registros.MainContainer
+	global.FuncionesInyect.ModificarSocios = modificar_usuarios.MainContainer
+	global.FuncionesInyect.Ajustes = ajustes.MainContainer
 }

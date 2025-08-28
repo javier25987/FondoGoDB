@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"log"
 
-	myfn "fondo/misFunciones"
+	"fondo/funcs"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -52,11 +52,11 @@ func getRegistros(mes string) [][4]string {
 			inicioS = "✅ "
 		}
 
-		valorDif = inicioS + myfn.FormatComas(diferencia)
+		valorDif = inicioS + funcs.FormatComas(diferencia)
 
 		tArray[0] = fecha
-		tArray[1] = myfn.FormatComas(ingreso)
-		tArray[2] = myfn.FormatComas(egreso)
+		tArray[1] = funcs.FormatComas(ingreso)
+		tArray[2] = funcs.FormatComas(egreso)
 		tArray[3] = valorDif
 
 		allUsers = append(allUsers, tArray)

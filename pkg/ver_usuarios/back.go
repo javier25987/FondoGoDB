@@ -5,7 +5,7 @@ import (
 	"log"
 	"strconv"
 
-	myfn "fondo/misFunciones"
+	"fondo/funcs"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -141,8 +141,8 @@ func getAcuerdos() [][4]string {
 
 		tArray[0] = strconv.Itoa(id)
 		tArray[1] = nombre
-		tArray[2] = myfn.FormatComas(capital)
-		tArray[3] = myfn.FormatComas(dinero)
+		tArray[2] = funcs.FormatComas(capital)
+		tArray[3] = funcs.FormatComas(dinero)
 
 		allUsers = append(allUsers, tArray)
 	}

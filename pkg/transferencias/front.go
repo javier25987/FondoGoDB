@@ -1,7 +1,7 @@
 package transferencias
 
 import (
-	myfn "fondo/misFunciones"
+	"fondo/funcs"
 	"strconv"
 
 	"fyne.io/fyne/v2/container"
@@ -14,7 +14,7 @@ func MainContainer() *container.Split {
 	ProporcionTabla := [4]float32{80.0, 200.0, 200.0, 200.0}
 
 	dataContainer := container.NewScroll(
-		myfn.MakeTable4(
+		funcs.MakeTable4(
 			getUsersTable(), ProporcionTabla,
 		),
 	)
@@ -22,14 +22,14 @@ func MainContainer() *container.Split {
 	selectUser := widget.NewSelect(
 		getAllUsers(), func(s string) {
 			if s == "TODOS" {
-				dataContainer.Content = myfn.MakeTable4(
+				dataContainer.Content = funcs.MakeTable4(
 					getUsersTable(), ProporcionTabla,
 				)
 			} else {
 				intValue, _ := strconv.Atoi(s)
 				User = intValue
 
-				dataContainer.Content = myfn.MakeTable4(
+				dataContainer.Content = funcs.MakeTable4(
 					getUserTable(User), ProporcionTabla,
 				)
 			}

@@ -1,6 +1,13 @@
-package misfunciones
+package funcs
 
-import "strconv"
+import (
+	"errors"
+	"fmt"
+	globals "fondo/global"
+	"strconv"
+
+	"fyne.io/fyne/v2/dialog"
+)
 
 func FormatComas(n int) string {
 	numberStr := strconv.Itoa(n)
@@ -36,4 +43,19 @@ func FormatComas(n int) string {
 	}
 
 	return string(result)
+}
+
+func RectNumber(num string) (bool, int) {
+	numero, err := strconv.Atoi(num)
+
+	if err != nil {
+		mensaje := fmt.Sprintf(
+			"[%s] No es un valor válido", num,
+		)
+		dialog.ShowError(errors.New(mensaje), globals.WinDialog)
+
+		return false, 0
+	}
+
+	return true, numero
 }
